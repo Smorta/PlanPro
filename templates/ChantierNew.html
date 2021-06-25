@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+	<title>Chantier</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href={% static 'vendor/bootstrap/css/bootstrap.min.css' %}>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href={% static 'fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href={% static 'CSS/Chantier.css' %}>
+<!--===============================================================================================-->
+</head>
+<header>
+</header>
+<body>
+	<div class="container card">
+		<form method="POST">
+			<div class="form-row">
+			 <div class="form-group col-md-6">
+				 <label for="inputName">Nom</label>
+				 {{form.inputName}}
+			 </div>
+			 <div class="form-group col-md-6">
+				 <label for="inputEntite">Entite</label><br>
+				 {{form.inputEntite}}
+			 </div>
+		 </div>
+		 <div class="form-row">
+			 <div class="form-group col-md-6">
+				<label for="inputDebut">Date début</label>
+				{{form.inputDebut}}
+				</div>
+			<div class="form-group col-md-6">
+				<label for="inputObjectif">Date Objectif</label>
+			 	{{form.inputObjectif}}
+			</div>
+		 </div>
+		<div class="form-row">
+		<a class="btn btn-secondary btn-list" href="{% url 'timelineChant' Year=year Month=month Day=day  %}">retour</a>
+		<button type="submit" href="/Chantier/1" class="btn btn-primary btn-list">Enregister</button>
+		</div>
+		{% csrf_token %}
+		</form>
+	</div>
+</div>
+
+<!--===============================================================================================-->
+	<script src={% static "vendor/jquery/jquery-3.2.1.min.js" %}></script>
+<!--===============================================================================================-->
+	<script src={% static "vendor/bootstrap/js/popper.min.js" %}></script>
+	<script src={% static "vendor/bootstrap/js/bootstrap.min.js" %}></script>
+<!--===============================================================================================-->
+	<script src={% static "vendor/select2/select2.min.js" %}></script>
+<!--===============================================================================================-->
+	<script src={% static "js/main.js" %}></script>
+
+</body>
+</html>

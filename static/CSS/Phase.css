@@ -1,0 +1,25 @@
+body{
+  background: #F5F5F5;
+}
+
+h1{
+  text-align: center;
+  color: #00aae9;
+}
+
+.container{
+  margin: 100px auto;
+  padding: 20px;
+}
+
+#Error{
+  color: red;
+}
+
+.btn-list{
+  margin: 5px;
+}
+
+.selectCustom{
+padding: 0px 10px;
+}

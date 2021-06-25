@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+	<title>Chantier</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href={% static 'vendor/bootstrap/css/bootstrap.min.css' %}>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href={% static 'fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href={% static 'CSS/Phase.css' %}>
+    <link rel="stylesheet" type="text/css" href={% static 'CSS/chantierSchedule.css' %}>
+<!--===============================================================================================-->
+</head>
+<header>
+</header>
+<body>
+    <div class="calendar-container">
+        <div class="calendar-header">
+          <h1>
+             Prologe
+          </h1>
+          <div class="command">
+              <div class="Time-Selector">
+                  <a class="btn-list">Aujourd'hui</a>
+                  <a class="btn-list">Janv-Mars</a>
+                  <a class="btn-list">Avril-Juin</a>
+                  <a class="btn-list">Juillet-Septembre</a>
+                  <a class="btn-list">Octobre-Décembre</a>
+              </div>
+              <div class="legend">
+                  <i class="fas fa-square Legend-NotStart"></i><p>Pas commencé</p>
+                  <i class="fas fa-square Legend-Progress"></i><p>En cours</p>
+                  <i class="fas fa-square Legend-Finish"></i><p>Fin</p>
+              </div>
+          </div>
+        </div>
+
+        <div class="calendar">
+            {% if WeekList %}
+                {% for week in WeekList %}
+                    <span class="day-name">{{week.0|date:"d/m"}} - {{week.1|date:"d/m"}}</span>
+                {% endfor %}
+            {% endif %}
+            <div class="item"></div>
+            <div class="item"></div>
+            <div class="item"></div>
+            <div class="item"></div>
+            <div class="item"></div>
+            <div class="item"></div>
+            <div class="item"></div>
+            <div class="item"></div>
+            <div class="item"></div>
+            <div class="item"></div>
+            <div class="item"></div>
+            <div class="item"></div>
+            {% for task in schedule.taskList %}
+              <section id="phase{{ task.phase.id}}" class="task {{task.line}} {{task.state}}" style="grid-row: 2;grid-column: {{task.column}}">
+                <p class="task_text">{{task.phase.Name}}</p>
+                <div style="display: none;" class="task__detail">
+                    <h2>Date début : {{ task.phase.Date_debut|date:"d/m/Y" }}</h2>
+                    <h2>objectif : {{ task.phase.Deadline|date:"d/m/Y"}}</h2>
+                    <span><i class="fas fa-caret-right"></i></span>
+                </div>
+              </section>
+            {% endfor %}
+        </div>
+    </div>
+	<div class="container card">
+		<form method="POST">
+			<div class="form-row">
+                 <div class="form-group col-md-6">
+                     <label for="inputName">Nom :</label>
+                     {{form.inputName}}
+                 </div>
+                 <div class="form-group col-md-6">
+                     <label for="inputEntite">Type :</label><br>
+                    {{ form.inputType }}
+                 </div>
+		    </div>
+             <div class="form-row">
+                 <div class="form-group col-md-6">
+                    <label for="inputDebut">Date début :</label>
+                    {{form.inputDebut}}
+                    </div>
+                <div class="form-group col-md-6">
+                    <label for="inputObjectif">Date Objectif :</label>
+                    {{form.inputObjectif}}
+                </div>
+             </div>
+            <div class="form-row justify-content-center">
+                 <div class="form-group col-md-6 ">
+                    <label for="inputState">Etat :</label>
+                    {{form.inputState}}
+                 </div>
+            </div>
+            <h4>Acheteur :</h4>
+            <div class="form-group col-lg " style="
+        margin-left: 40px;">
+                {% if responsableList %}
+                    {% for R in responsableList %}
+                         <div class="form-check">
+                         {% if R in phaseRespList %}
+                             <input class="form-check-input" value="{{R.id}}" type="checkbox" name="Resp" checked>
+                         {% else %}
+                             <input class="form-check-input" value="{{R.id}}" type="checkbox" name="Resp">
+                         {% endif %}
+                          <label class="form-check-label" for=Resp{{R.id}}">
+                            {{R.FirstName}}
+                          </label>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="form-row">
+            <a class="btn btn-secondary btn-list" href="{% url 'Chantier_Modif' chant_id=id_chant%}">retour</a>
+            <button type="submit" href="/timeline" class="btn btn-primary btn-list">Enregister</button>
+             <a class="btn btn-danger btn-list" href="{% url 'Phase_delete' phase_id=phase.id %}">Supprimer</a>
+            </div>
+		{% csrf_token %}
+		</form>
+	</div>
+</div>
+
+<!--===============================================================================================-->
+	<script src={% static "vendor/jquery/jquery-3.2.1.min.js" %}></script>
+<!--===============================================================================================-->
+	<script src={% static "vendor/bootstrap/js/popper.min.js" %}></script>
+	<script src={% static "vendor/bootstrap/js/bootstrap.min.js" %}></script>
+<!--===============================================================================================-->
+	<script src={% static "vendor/select2/select2.min.js" %}></script>
+<!--===============================================================================================-->
+	<script src={% static "js/main.js" %}></script>
+
+</body>
+</html>

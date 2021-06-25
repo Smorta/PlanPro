@@ -1,0 +1,235 @@
+
+
+.calendar {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(12, minmax(120px, 1fr));
+  grid-template-rows: 50px;
+  /*grid-auto-rows: 160px;*/
+  overflow: auto;
+}
+
+
+.item:nth-of-type(12n + 1) {
+  grid-column: 1/1;
+  border-left: 1px solid rgba(166, 168, 179, 0.12) ;
+}
+.item:nth-of-type(12n + 2) {
+  grid-column: 2/2;
+}
+.item:nth-of-type(12n + 3) {
+  grid-column: 3/3;
+}
+.item:nth-of-type(12n + 4) {
+  grid-column: 4/4;
+}
+.item:nth-of-type(12n + 5) {
+  grid-column: 5/5;
+}
+.item:nth-of-type(12n + 6) {
+  grid-column: 6/6;
+}
+.item:nth-of-type(12n + 7) {
+  grid-column: 7/7;
+}
+.item:nth-of-type(12n + 8) {
+  grid-column: 8/8;
+}
+.item:nth-of-type(12n + 9) {
+  grid-column: 9/9;
+}
+.item:nth-of-type(12n + 10) {
+  grid-column: 10/10;
+}
+.item:nth-of-type(12n + 11) {
+  grid-column: 11/11;
+}
+.item:nth-of-type(12n) {
+  grid-column: 12/12;
+}
+
+.calendar-container {
+  width: 95%;
+  margin: auto;
+  overflow: hidden;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  background: #fff;
+  padding: 20px;
+  margin-top: 30px;
+}
+.calendar-header {
+  text-align: center;
+  background: linear-gradient(to bottom, #fafbfd 0%, rgba(255, 255, 255, 0) 100%);
+  border-bottom: 1px solid rgba(166, 168, 179, 0.12);
+}
+.calendar-header h1 {
+  margin: 0;
+  font-size: 45px;
+  margin-bottom: 30px;
+}
+.calendar-header p {
+  margin: 5px 0 0 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(81, 86, 93, 0.4);
+}
+
+.day {
+  border-bottom: 1px solid rgba(166, 168, 179, 0.12);
+  border-right: 1px solid rgba(166, 168, 179, 0.12);
+  text-align: right;
+  padding: 14px 20px;
+  letter-spacing: 1px;
+  font-size: 12px;
+  box-sizing: border-box;
+  color: #98a0a6;
+  position: relative;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.item{
+  border-bottom: 2px solid rgba(166, 168, 179, 0.8);
+  border-right: 1px solid rgba(166, 168, 179, 0.3);
+  grid-row: 2;
+}
+
+
+.day-name {
+  font-family: Montserrat, "sans-serif";
+  font-size: 20px;
+  text-transform: uppercase;
+  color: #99a1a7;
+  text-align: center;
+  border-bottom: 2px solid rgba(166, 168, 179, 0.8);
+  border-right: 1px solid rgba(166, 168, 179, 0.12) ;
+  border-left: 1px solid rgba(166, 168, 179, 0.12) ;
+  line-height: 50px;
+  font-weight: 500;
+}
+
+.task {
+  padding: 3px 5px 3px 8px;
+  margin: 10px 5px;
+  font-size: 16px;
+  height: 50px;
+  text-align: center;
+  color: white;
+  border-radius: 5px;
+}
+
+.tb {
+  display: table;
+  height: 35px;
+  width: 100%;
+}
+
+.task_text {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  margin: 0;
+}
+
+.Line1{
+  margin-top: 5px;
+}
+
+.Line2{
+  margin-top: 60px;
+}
+
+.Line3{
+  margin-top: 95px;
+}
+
+.NotStart {
+  background: rgba(214,45,32,1);
+}
+
+.Progress {
+  background: rgba(243,119,53,1);
+}
+
+.Finish {
+  background: rgba(0,177,89,1);
+}
+
+.task__detail {
+  width: 220px;
+  position: relative;
+  right: 235px;
+  bottom: 35px;
+  background: #fff;
+  border: 1px solid rgba(166, 168, 179, 0.2);
+  color: #000;
+  padding: 10px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  z-index: 2;
+  box-shadow: 9px 12px 20px rgb(0 0 0 / 10%);
+}
+
+.task__detail h2 {
+  font-size: 15px;
+  margin: 0;
+  color: #51565d;
+}
+.task__detail p {
+  margin-top: 4px;
+  font-size: 12px;
+  margin-bottom: 0;
+  font-weight: 500;
+  color: rgba(81, 86, 93, 0.7);
+}
+
+.task__detail span{
+  position: absolute;
+  left: 100%;
+  bottom: 20px;
+  font-size: 24px;
+  color: white;
+}
+
+.command{
+  margin-bottom: 30px;
+}
+
+.legend{
+  display: flex;
+  position: absolute;
+  right: 130px;
+}
+
+.legend p{
+  font-size: 18px;
+  margin: 0px 5px;
+  color: black;
+}
+
+.legend i {
+    margin-left: 10px;
+}
+
+.Legend-NotStart{
+  color: rgba(214,45,32,1);
+}
+
+.Legend-Progress{
+  color: rgba(243,119,53,1);
+}
+
+.Legend-Finish{
+  color: rgba(0,177,89,1);
+}
+.Time-Selector{
+  margin-left: 30px;
+}
+.Time-Selector .btn-list{
+  background: #666;
+  color: white;
+  padding: 10px 10px;
+  border-radius: 5px;
+  margin: 0px 5px;
+}

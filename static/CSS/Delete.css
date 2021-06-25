@@ -1,0 +1,19 @@
+body{
+  background: #F5F5F5;
+}
+
+h1{
+  text-align: center;
+  color: #00aae9;
+}
+
+.container{
+  margin: 100px auto;
+  padding: 20px;
+  width : 400px;
+}
+
+.form-row a{
+    margin-right: 40px;
+}
+

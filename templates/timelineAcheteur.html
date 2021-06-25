@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="fr">
+<head>
+  <link rel="stylesheet" type="text/css" href={% static "CSS/timelineAcheteur3.css" %}>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
+</head>
+<body>
+  <div class="calendar-container">
+    <div class="calendar-header">
+      <h1>
+         Prologe
+      </h1>
+      <div class="command">
+          <div class="ajout">
+              <a href="{% url 'Chantier_new' %}"><button class="btn-ajout" ><i class="fas fa-plus-circle"></i> Nouveau Chantier</button></a>
+          </div>
+          <div class="Time-Selector">
+              <a class="btn-list">Aujourd'hui</a>
+              <a class="btn-list">Janv-Mars</a>
+              <a class="btn-list">Avril-Juin</a>
+              <a class="btn-list">Juillet-Septembre</a>
+              <a class="btn-list">Octobre-Décembre</a>
+          </div>
+          <div class="legend">
+              <i class="fas fa-square Legend-NotStart"></i><p>Pas commencé</p>
+              <i class="fas fa-square Legend-Progress"></i><p>En cours</p>
+              <i class="fas fa-square Legend-Finish"></i><p>Fin</p>
+          </div>
+      </div>>
+    </div>
+    {% for acheteur in acheteurList %}
+        <div class="calendar"><span class="chantier-name">Acheteur</span><span class="chantier-name2"></span><span class="chantier-name2"></span>
+          {% if WeekList %}
+            {% for week in WeekList %}
+                <span class="day-name">{{week.0|date:"d/m"}} - {{week.1|date:"d/m"}}</span>
+            {% endfor %}
+          {% endif %}
+          {% if acheteur %}
+            {% for A in acheteur %}
+                  {% if A.chantierList %}
+                      {% for chant in A.chantierList %}
+                        <div class="item"><data value="{{ A.self.id }}"></data></div>
+                        <div class="item"><data value="{{ A.self.id }}"></data></div>
+                        <div class="item"><data value="{{ A.self.id }}"></data></div>
+                        <div class="item"><data value="{{ A.self.id }}"></data></div>
+                        <div class="item"><data value="{{ A.self.id }}"></data></div>
+                        <div class="item"><data value="{{ A.self.id }}"></data></div>
+                        <div class="item"><data value="{{ A.self.id }}"></data></div>
+                        <div class="item"><data value="{{ A.self.id }}"></data></div>
+                        <div class="item"><data value="{{ A.self.id }}"></data></div>
+                        <div class="item"><data value="{{ A.self.id }}"></data></div>
+                        <div class="item"><data value="{{ A.self.id }}"></data></div>
+                        <div class="item"><data value="{{ A.self.id }}"></data></div>
+                      {% endfor %}
+                  {% else %}
+                    <div class="item"><data value="{{ A.self.id }}"></data></div>
+                    <div class="item"><data value="{{ A.self.id }}"></data></div>
+                    <div class="item"><data value="{{ A.self.id }}"></data></div>
+                    <div class="item"><data value="{{ A.self.id }}"></data></div>
+                    <div class="item"><data value="{{ A.self.id }}"></data></div>
+                    <div class="item"><data value="{{ A.self.id }}"></data></div>
+                    <div class="item"><data value="{{ A.self.id }}"></data></div>
+                    <div class="item"><data value="{{ A.self.id }}"></data></div>
+                    <div class="item"><data value="{{ A.self.id }}"></data></div>
+                    <div class="item"><data value="{{ A.self.id }}"></data></div>
+                    <div class="item"><data value="{{ A.self.id }}"></data></div>
+                    <div class="item"><data value="{{ A.self.id }}"></data></div>
+                  {% endif %}
+            {% endfor %}
+            {% for A in acheteur %}
+                <div class="chantier"  style="grid-row: {{A.row.0}}/{{ A.row.1}};"><h2>{{A.self.FirstName}}<a href="à compléter"><i class="fas fa-edit"></i></a></h2>
+                    <div class="chantier-detail">
+                    <p>Début: {{chant.self.Date_debut|date:"d/m/Y"}}</p>
+                    <p>Objectif: {{chant.self.Date_fin|date:"d/m/Y"}}</p>
+                    </div>
+                    </div>
+                    {% for chant in A.chantierList %}
+                        <div class="phase-indicator" style="grid-row: {{A.row.0|add:chant.num}};">
+                            <p>{{ chant.self.Name }}</p>
+                        </div>
+                    {% endfor %}
+                    {% for chant in A.chantierList %}
+                        {% for task in chant.timeline.taskList %}
+                          <section id="phase-{{ task.phase.id}}" class="task {{task.line}} {{task.state}}" style="grid-row: {{A.row.0|add:chant.num}};grid-column: {{task.column}}">
+                            <data value="{{ A.self.id }}"></data>
+                            <div class="tb">
+                                <p class="task_text">{{task.phase.Name}}</p>
+                            </div>
+                            <div style="display: none;" class="task__detail">
+                                <h2>Date début : {{ task.phase.Date_debut|date:"d/m/Y" }}</h2>
+                                <h2>objectif : {{ task.phase.Deadline|date:"d/m/Y"}}</h2>
+                                <span><i class="fas fa-caret-right"></i></span>
+                            </div>
+                          </section>
+                        {% endfor %}
+                    {% endfor %}
+
+                <section class="task-separator" style="grid-row:2;grid-column: 7/11"></section>
+            {% endfor %}
+          {% comment %}<section style="grid-row:4;" class="time-indicator"></section>{% endcomment %}
+          {% endif %}
+        </div>
+    {% endfor %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+    <script>
+    (function ($) {
+    $(function() { // cette ligne est équivalente à $(document).ready(function(){})
+       $(".task__detail").each(function () {
+           $(this).parent().mouseleave(function () {//quand la souris passe sur l'element
+               $(this).children(".task__detail").hide(); // permet de cacher des éléments a l'aide de sélecteur (les mêmes quand css)
+           });
+           $(this).parent().mouseenter(function () {//quand la souris ressort de l'element
+               $(this).children(".task__detail").show();
+           });
+       });
+
+       $('.task').draggable({
+           cursor: 'move',
+           containment: 'document',
+           stop: dragEnd,
+           start : dragStart
+       });
+
+       function dragStart(event,ui) {
+       }
+
+       function dragEnd(event,ui) {
+       }
+
+       $('.item').droppable({
+           drop : handleTaskDrop,
+           hoverClass: 'hovered',
+       });
+
+       function getCookie(name) {
+         var cookieValue = null;
+         if (document.cookie && document.cookie != '') {
+             var cookies = document.cookie.split(';');
+             for (var i = 0; i < cookies.length; i++) {
+                 var cookie = jQuery.trim(cookies[i]);
+                 // Does this cookie string begin with the name we want?
+                 if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                     cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                 break;
+             }
+         }
+         }
+         return cookieValue;
+        }
+
+        function csrfSafeMethod(method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+
+        var csrftoken = getCookie('csrftoken');
+        // Ensure jQuery AJAX calls set the CSRF header to prevent security errors
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+
+       function handleTaskDrop( event, ui ) {
+
+           const draggable = ui.draggable;
+           ui.draggable.position({of: $(this), my: 'left top', at: 'left top'});
+           const ID = draggable.attr('id');
+           const DGA = draggable.css("grid-area");
+           const DataDrop = $(this).children().attr('value');
+           const DataDrag = draggable.children().first().attr('value')
+           console.log(DataDrag)
+           const GC = $(this).css("grid-column");
+           const jsonString = 'DataDrop=' + DataDrop + '&DataDrag=' + DataDrag + "&GC=" + GC + "&ID=" + ID + "&DGA=" + DGA;
+
+           $.ajax({
+               type: "POST",
+               data: jsonString,
+               dataType : "html",
+               url: "../../../../RefreshTimelineAchat/"
+           });
+           setTimeout(function(){ location.reload(true); }, 100);
+
+       }
+
+    });
+
+})(jQuery);
+    </script>
+</body>
+</html>>
