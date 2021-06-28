@@ -3,6 +3,8 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse, HttpResponseServerError
 from Achat.models import Responsable, User, Chantier, Modification, Phase
 from datetime import datetime, timedelta, date
+from . import forms, phaseApp
+import calendar
 from django.db import connection
 from Achat.timeline import Timeline
 
@@ -46,6 +48,7 @@ def chantierAcheteur(resp_id):
 
 def schedule(request, Year, Month, Day):
     if request.session.get('connected') == 'true':
+        responsable_list = Responsable.objects.order_by('Name')
         acheteur = Responsable.objects.order_by('Name')
         acheteur_list = list()
         begin = date(int(Year), int(Month), int(Day))
@@ -83,7 +86,40 @@ def schedule(request, Year, Month, Day):
             'WeekList': weekList,
             'acheteurList': acheteur_list,
             'connected': request.session.get('connected'),
+            'responsableList': responsable_list,
+            'form' : forms.PhaseForm
         }
         return render(request, 'timelineAcheteur.html', context)
     else:
         return redirect('/Home')
+
+def addMonths(inputDate, month):
+    tmpMonth = inputDate.month - 1 + month
+    # Add floor((input month - 1 + k)/12) to input year component to get result year component
+    resYr = inputDate.year + tmpMonth // 12
+    # Result month component would be (input month - 1 + k)%12 + 1
+    resMnth = tmpMonth % 12 + 1
+    # Result day component would be minimum of input date component and max date of the result month (For example we cant have day component as 30 in February month)
+    # Maximum date in a month can be found using the calendar module monthrange function as shown below
+    resDay = min(inputDate.day, calendar.monthrange(resYr, resMnth)[1])
+    # construct result datetime with the components derived above
+    resDate = date(resYr, resMnth, resDay)
+
+    return resDate
+
+def setDateTimeline(request, Data):
+
+    Data = int(Data)
+    if Data == 0:
+        request.session['year'] = str(date.today().year)
+        request.session['month'] = str(date.today().month)
+        request.session['day'] = str(date.today().day)
+
+    else:
+        actualDate = date(int(request.session['year']), int(request.session['month']), int(request.session['day']))
+        newDate = addMonths(actualDate,Data)
+        request.session['year'] = str(newDate .year)
+        request.session['month'] = str(newDate .month)
+        request.session['day'] = str(newDate .day)
+
+    return redirect("/TimelineAcheteur/" + request.session['year'] + "/" + request.session['month'] + "/" + request.session['day'])

@@ -73,6 +73,11 @@ def scheduleAcheteur(request,Year,Month,Day):
 def refreshScheduleAchat(request):
     return ScheduleAchat.refreshSchedule(request)
 
+def resizeTask(request):
+    return phaseApp.resize(request)
+def setDateTimelineAchat(request, Data):
+    return ScheduleAchat.setDateTimeline(request, Data)
+
 def Chantier_new(request):
     return chantierApp.New(request)
 
@@ -87,6 +92,9 @@ def Phase_new(request, chant_id, typePhase):
 
 def Phase_modif(request, phase_id):
     return phaseApp.Modif(request, phase_id)
+
+def Phase_save(request, phase_id):
+    return phaseApp.Save(request, phase_id)
 
 def phaseDelete(request, phase_id):
     return phaseApp.Delete(request, phase_id)

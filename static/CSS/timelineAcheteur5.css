@@ -16,19 +16,15 @@ h4{
   width: 100%;
   grid-template-columns: repeat(15, minmax(120px, 1fr));
   grid-template-rows: 50px;
-  /*grid-auto-rows: 160px;*/
-  /*overflow: auto;*/
 }
 
 
 .calendar-container {
   width: 95%;
   margin: auto;
-  overflow: hidden;
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   background: #fff;
-  /* max-width: 1200px; */
 }
 .calendar-header {
   text-align: center;
@@ -212,7 +208,7 @@ h4{
   padding: 3px 5px 3px 8px;
   margin: 10px 5px;
   font-size: 16px;
-  height: 35px;
+  height: 50px;
   text-align: center;
   color: white;
   border-radius: 5px;
@@ -220,7 +216,7 @@ h4{
 
 .tb {
   display: table;
-  height: 35px;
+  height: 50px;
   width: 100%;
 }
 
@@ -382,4 +378,41 @@ h4{
 
 .hovered {
   background: #aaa;
+}
+
+.border-separator{
+  border-bottom: 3px solid black;
+}
+
+.form-taskContainer{
+  width: 600px;
+  position: relative;
+  right: 150px;
+  bottom: -8px;
+  background: #fff;
+  border: 1px solid rgba(166, 168, 179, 0.2);
+  color: #000;
+  padding: 10px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  z-index: 2;
+  box-shadow: -18px -8px 19px rgb(0 0 0 / 20%);
+  text-align: start;
+}
+
+.form-taskContainer span{
+  position: absolute;
+  left: 50%;
+  top: -23px;
+  font-size: 24px;
+  color: white;
+}
+
+.check{
+  text-align: start;
+}
+
+.exit{
+  font-size: 30px;
+  color: #666;
 }

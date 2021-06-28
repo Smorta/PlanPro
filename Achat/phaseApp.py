@@ -70,9 +70,7 @@ def Modif(request, phase_id):
 
         if request.method == 'POST':
             form = forms.PhaseForm(request.POST)
-            print('hello world')
             if form.is_valid():
-                print('coucou')
                 Name = form.cleaned_data['inputName']
                 Type = form.cleaned_data['inputType']
                 Debut = form.cleaned_data['inputDebut']
@@ -118,6 +116,55 @@ def Modif(request, phase_id):
         return render(request, 'Phase.html', context)
     else:
         return redirect('/Home')
+
+def Save(request, phase_id):
+    if request.session.get('connected') == 'true':
+        phase = Phase.objects.get(pk=phase_id)
+        phaseRespList = phase.id_Responsable.all()
+        year = request.session['year']
+        month = request.session['month']
+        day = request.session['day']
+        if request.method == 'POST' and request.is_ajax():
+            try:
+                acheteurs = request.POST.getlist("Resp")
+                phase.Name = request.POST.get("inputName")
+                debut = datetime.strptime(request.POST.get("inputDebut"),'%Y-%m-%d').date()
+                phase.Date_debut = debut
+                deadline = datetime.strptime(request.POST.get("inputObjectif"),'%Y-%m-%d').date()
+                phase.Deadline = deadline
+                phase.State = request.POST.get("inputState")
+                for phaseResp in phaseRespList:
+                    if phaseResp.id not in acheteurs:
+                        phase.id_Responsable.remove(phaseResp)
+                for A in acheteurs:
+                    Resp = Responsable.objects.get(pk=A)
+                    phase.id_Responsable.add(Resp)
+                phase.save()
+                return JsonResponse({"success": True}, status=200)
+            except KeyError:
+                HttpResponseServerError("Malformed data!")
+        else:
+            return JsonResponse({"success": False}, status=400)
+    else:
+        return JsonResponse({"success": False}, status=400)
+
+def resize(request):
+    if request.method == 'POST' and request.is_ajax():
+        try:
+            phase_id = request.POST.get("ID").split("-")[1]
+            phase = Phase.objects.get(pk=phase_id)
+            deltaWeek = int(request.POST.get("deltaWidth"))
+            if request.POST.get("deltaLeft") == "0":
+                phase.Deadline = phase.Deadline + timedelta(weeks=deltaWeek)
+                phase.save()
+            else:
+                phase.Date_debut = phase.Date_debut - timedelta(weeks=deltaWeek)
+                phase.save()
+            return JsonResponse({"success": True}, status=200)
+        except KeyError:
+            HttpResponseServerError("Malformed data!")
+    else:
+        return JsonResponse({"success": False}, status=400)
 
 def Delete(request, phase_id):
     if request.session.get('connected') == 'true':
